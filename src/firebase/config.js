@@ -2,7 +2,9 @@ import { ref } from 'vue'
 import { initializeApp } from 'firebase/app'
 import { getFirestore, enableIndexedDbPersistence  }
 from 'firebase/firestore'
+import { getAuth } from "firebase/auth";
 const error = ref('')
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCemroWWJWIn_pkns2efSBa2ReHa4QxdhU",
@@ -34,4 +36,6 @@ enableIndexedDbPersistence(db)
           // ...
       }
   })
-export  { db, error }
+const auth = getAuth()
+
+export  { db, auth }
