@@ -904,7 +904,7 @@
                         jourFactureAout2021 : jourFactureAout2021.value,
                         montantAout2021 : montantAout2021.value,
                         impayeAout2021 : impayeAout2021.value,
-                        nbForage: "0", // nbForage.value,
+                        nbForage: nbForage.value,
                         compteurForage: compteurForage.value,
                         nbPuit: nbPuit.value,
                         compteurPuit: compteurPuit.value,
