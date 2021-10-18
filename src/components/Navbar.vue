@@ -1,6 +1,6 @@
 <template>
-  <header>
-        <h1>ENQUETE QUNATITATIVE - SONDAGE SEG</h1>
+  <header class="header">
+        <h1>ENQUETE QUANTITATIVE - SONDAGE SEG</h1>
         <nav>
             <router-link :to="{ name: 'Home' }">Home</router-link>
             <router-link :to="{ name: 'SignIn' }" v-if="!user">Login</router-link>

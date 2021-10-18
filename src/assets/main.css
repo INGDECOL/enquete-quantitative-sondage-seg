@@ -1,5 +1,6 @@
 /* Custom fonts  */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap');
 
 /* Variables */
 :root {
@@ -61,9 +62,13 @@ header {
     margin: 0 auto;
     padding: 10px;
   }
-  header h1 {
+  header.header h1 {
     color: #dfdfdf;
     font-size: 40px;
+    font-family: 'Tangerine', serif;
+    /* font-size: 48px; */
+    text-shadow: 2px 2px 2px rgb(37, 36, 36);
+
   }
 header a {
     margin-left: 20px;
@@ -175,19 +180,44 @@ nav span {
 }
 
  .enquete {
-      margin: 0 40px 30px;
-      padding-bottom: 30px;
-      border-bottom: 1px dashed #e7e7e7;
+      margin: 20px auto;
+      padding: 10px 20px;
+      border-bottom: 1.7px dashed #e7e7e7;
+      background: #f5f5f5;
+      border-radius: 10px;
+      box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.05);
+      border-left: 4px solid #1f8a4f;
     }
-    .enquete h3 {
+/* .enquete :hover {
+    background: lightgray;
+} */
+.enquete h3 {
       display: inline-block;
       position: relative;
       font-size: 26px;
-      color: white;
+      /* color: white; */
       margin-bottom: 10px;
       max-width: 400px;
+      cursor: pointer;
     }
-    .enquete h3::before {
+ .actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .material-icons {
+        font-size: 23px;
+        margin-left: 10px;
+        cursor: pointer;
+        color: #bbb;
+    }
+    .material-icons:hover {
+        color: #777;
+    }
+    .material-icons.strash:hover {
+        color: #ec8a8a;
+    }
+/* .enquete h3::before {
       content: "";
       display: block;
       width: 100%;
@@ -198,13 +228,13 @@ nav span {
       padding-right: 40px;
       left: -30px;
       transform: rotateZ(-1deg);
-    }
-    .enquete a {
+    } */
+.enquete a {
       color: #cbb2bb;
       text-decoration: none;
       margin-left: 20px;
     }
-    .enquete a.router-link-active {
+.enquete a.router-link-active {
       font-weight: bold;
       color: #444;
     }

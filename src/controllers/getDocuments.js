@@ -13,7 +13,7 @@ import {  getDocs, collection, query, orderBy, onSnapshot } from 'firebase/fires
                     return {...doc.data(), id : doc.id}
                 })
             })
-            //console.log("Form :", documents.value)
+            //console.log("Form :", res)
         }catch (err) {
             getError.value = err.message
             console.log(err);
