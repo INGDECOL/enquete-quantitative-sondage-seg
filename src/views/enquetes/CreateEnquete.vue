@@ -1,7 +1,7 @@
 <template>
     <div class="create">
         <form class="enquete" @submit.prevent="handleSubmit">
-            <div class="error" v-if="error">{{ error}}</div>
+            <div class="error" >{{ error}}</div>
             <div class="entete">
                 <p>
                     ENQUETE ENTREPRISE SUR L’ALIMENTATION EN EAU POTABLE
@@ -185,6 +185,7 @@
 <script>
     import {  ref } from '@vue/reactivity'
     import createDocument from '../../controllers/createDocument'
+    import getDocument from '../../controllers/getDocument'
     import setDocument from '../../controllers/setDocument'
     import { doc, getDoc, serverTimestamp } from 'firebase/firestore'
     import { useRoute, useRouter } from 'vue-router'
@@ -194,6 +195,7 @@
         props: ['token'],
 
         setup() {
+
             const id = ref(null)
             const error = ref(null)
             const p = ref({})
@@ -224,22 +226,24 @@
             const route = useRoute()
             const router = useRouter()
             enqueteur.value = auth.currentUser.displayName
-            const f = onMounted( async () =>{
+
+            // const f =  async () =>{
                 console.log(" onMounted ")
                 if(route.params.id){
-                    console.log("route")
-                    // const { enquete, error, load } = getenquete(route.params.id)
-                    // load()
-                    const docRef = doc( db, 'entreprises', route.params.id)
-                    const res =   await getDoc(docRef)
-                    console.log(" entreprise res :", res.data().title)
+                    console.log("route", route.params.id)
+                    const { document, getError, load } = getDocument("entreprises", route.params.id)
+                    load()
+                    console.log("Document retrieved : ", document.value)
+                    // const docRef = doc( db, 'entreprises', route.params.id)
+                    // const res =   await getDoc(docRef)
+                    // console.log(" entreprise res :", res.data().title)
                     // id.value = res.id
                     // title.value = res.data().title
                     // body.value = res.data().body
                     // tags.value = [...res.data().tags]
-                    console.log(" id : ", id.value)
+                    //console.log(" id : ", id.value)
                 }
-            })
+            // }
 
             const { createError, create } = createDocument()
             const { setError, insert } = setDocument()
@@ -258,6 +262,7 @@
                 console.log(" Not id")
                 let entreprise = {
                     enqueteurId: auth.currentUser.email,
+                    zoneEnquete: zoneEnquete.value,
                     nomEtreprise: nomEtreprise.value,
                     contactEtreprise: contactEtreprise.value,
                     nomRepondant: nomRepondant.value,
@@ -272,7 +277,7 @@
                 const res = await create("entreprises", entreprise)
                 error.value = createError.value
                 if(error.value){
-                    return
+                    console.log("Error : ", error.value)
                 }
                 //Add  Secteur activité
                 let secteurActivite = {
@@ -305,7 +310,7 @@
 </script>
 
 <style>
-    
+
   button.edit {
     /* display: block;
     margin-top: 30px; */

@@ -32,12 +32,7 @@ export default {
         const { documents, getError, load } = getDocuments()
         error.value = null
         load("entreprises")
-        // const d = computed(async () => {
-        //     load("entreprises")
-        //     enquetes.value = documents.value
-        // })
         error.value = getError.value
-        console.log("Documents on EnqueteListe : ", documents.value)
         return { newEnquete,  error, documents, getError  }
     }
 }
