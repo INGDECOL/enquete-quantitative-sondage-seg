@@ -176,7 +176,7 @@
             <hr>
             <div class="error">{{ error }}</div>
             <div class="button">
-                <button>{{ id ? 'Edit enquete' : 'Enregistrer'}}</button>
+                <button>{{ id ? 'Modifier' : 'Enregistrer'}}</button>
             </div>
         </form>
     </div>
@@ -187,6 +187,7 @@
     import createDocument from '../../controllers/createDocument'
     import getDocument from '../../controllers/getDocument'
     import setDocument from '../../controllers/setDocument'
+    import updateDocument from '../../controllers/updateDocument'
     import { doc, getDoc, serverTimestamp } from 'firebase/firestore'
     import { useRoute, useRouter } from 'vue-router'
     import { db, auth } from '../../firebase/config'
@@ -200,6 +201,7 @@
             const error = ref(null)
             const p = ref({})
             const enqueteur = ref('')
+            const enqueteurId = ref('')
             const zoneEnquete = ref('')
             const nomEtreprise = ref('')
             const contactEtreprise = ref('')
@@ -209,6 +211,7 @@
             const siteweb = ref('')
             const mail = ref('')
             const dateEnquete = ref('')
+            const createdAt = ref('')
             const secteurSecondaire = ref('')
             const secteurPrincipal = ref('')
             const serviceFournis = ref('')
@@ -227,36 +230,96 @@
             const router = useRouter()
             enqueteur.value = auth.currentUser.displayName
 
-            // const f =  async () =>{
-                console.log(" onMounted ")
-                if(route.params.id){
-                    console.log("route", route.params.id)
-                    const { document, getError, load } = getDocument("entreprises", route.params.id)
-                    load()
-                    console.log("Document retrieved : ", document.value)
-                    // const docRef = doc( db, 'entreprises', route.params.id)
-                    // const res =   await getDoc(docRef)
-                    // console.log(" entreprise res :", res.data().title)
-                    // id.value = res.id
-                    // title.value = res.data().title
-                    // body.value = res.data().body
-                    // tags.value = [...res.data().tags]
-                    //console.log(" id : ", id.value)
-                }
-            // }
+                onMounted( async () => {
+                     if( route.params.id ) {
+                         error.value = null
+                        const { document, getError, load } = getDocument()
+                        await load("entreprises", route.params.id)
+                        error.value = getError.value
+                        if( document.value ) {
+                            //console.log("Document retrieved : ", document.value)
+                            id.value = document.value.id
+                            enqueteurId.value = document.value.enqueteurId
+                            zoneEnquete.value = document.value.zoneEnquete
+                            nomEtreprise.value = document.value.nomEtreprise
+                            contactEtreprise.value = document.value.contactEtreprise
+                            nomRepondant.value = document.value.nomRepondant
+                            contactRepondant.value = document.value.contactRepondant
+                            responsabilite.value = document.value.responsabilite
+                            siteweb.value = document.value.siteweb
+                            mail.value = document.value.mail
+                            dateEnquete.value = document.value.dateEnquete
+                            createdAt.value = document.value.createdAt
+
+                        }
+
+                        await load( "secteurActivites", route.params.id)
+                        error.value = getError.value
+                        if ( document.value ) {
+                            id.value = document.value.id
+                            secteurSecondaire.value = document.value.secteurSecondaire
+                            secteurPrincipal.value = document.value.secteurPrincipal
+                            serviceFournis.value = document.value.serviceFournis
+                            quantiteFournis.value = document.value.quantiteFournis
+                            employePermanent.value = document.value.employePermanent
+                            employeSaisonnier.value = document.value.employeSaisonnier
+                            employeJournalier.value = document.value.employeJournalier
+                            nbResidence.value = document.value.nbResidence
+                            nbCantine.value = document.value.nbCantine
+                            evolutionProduction.value = document.value.evolutionProduction
+                            perspectiveMoyenTerme.value = document.value.perspectiveMoyenTerme
+                            raisonsStructurelle.value = document.value.raisonsStructurelle
+                        }
+                     }
+                })
 
             const { createError, create } = createDocument()
             const { setError, insert } = setDocument()
+            const { updateError, update } = updateDocument()
             const handleSubmit = async () =>{
             if(id.value) {
                 //update
-                let p = {
-                id: id.value,
-                // title: title.value,
-                // body: body.value,
-                // tags: tags.value
+                console.log("Updating entreprise .........")
+                let entreprise = {
+                    id: id.value,
+                    enqueteurId: auth.currentUser.email,
+                    zoneEnquete: zoneEnquete.value,
+                    nomEtreprise: nomEtreprise.value,
+                    contactEtreprise: contactEtreprise.value,
+                    nomRepondant: nomRepondant.value,
+                    contactRepondant: contactRepondant.value,
+                    responsabilite: responsabilite.value,
+                    siteweb: siteweb.value,
+                    mail: mail.value,
+                    dateEnquete: dateEnquete.value,
+                    //createdAt: createdAt.value
                 }
-                update(p)
+                await update( "entreprises", entreprise, route.params.id)
+                error.value = updateError.value
+
+                 const  secteurActivite = {
+                    id: id.value,
+                    secteurSecondaire: secteurSecondaire.value,
+                    secteurPrincipal: secteurPrincipal.value,
+                    serviceFournis: serviceFournis.value,
+                    quantiteFournis: quantiteFournis.value,
+                    employePermanent: employePermanent.value,
+                    employeSaisonnier: employeSaisonnier.value,
+                    employeJournalier: employeJournalier.value,
+                    nbResidence: nbResidence.value,
+                    nbCantine: nbCantine.value,
+                    evolutionProduction: evolutionProduction.value,
+                    perspectiveMoyenTerme: perspectiveMoyenTerme.value,
+                    raisonsStructurelle: raisonsStructurelle.value,
+                    //createdAt: serverTimestamp()
+                }
+                await update("secteurActivites", secteurActivite, route.params.id)
+                console.log("Secteur Updated ...................................")
+                error.value = setError.value
+                if(!error.value){
+                    router.push( { name: 'Approvisionnement', params: { token: auth.currentUser.accessToken, docId: route.params.id }})
+                }
+
             } else {
                 //Create
                 console.log(" Not id")

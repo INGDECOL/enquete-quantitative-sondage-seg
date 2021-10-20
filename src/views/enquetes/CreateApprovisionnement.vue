@@ -145,7 +145,7 @@
                          </tr>
                          <tbody>
                              <tr>
-                                 <td><input type="text" v-model="usages[0]"  @blur="show"></td>
+                                 <td><input type="text" v-model="usages[0]" ></td>
                                  <td><input type="text" v-model="sourcePrincipales[0]"></td>
                                  <td><input type="text" v-model="qualiteEau[0]"></td>
                                  <td>
@@ -157,7 +157,7 @@
                                  </td>
                              </tr>
                              <tr>
-                                 <td><input type="text" v-model="usages[1]"  @blur="show"></td>
+                                 <td><input type="text" v-model="usages[1]"  ></td>
                                  <td><input type="text" v-model="sourcePrincipales[1]"></td>
                                  <td><input type="text" v-model="qualiteEau[1]"></td>
                                  <td>
@@ -735,8 +735,9 @@
 <script>
     import {  ref } from '@vue/reactivity'
     import updateDocument from '../../controllers/updateDocument'
+    import getDocument from '../../controllers/getDocument'
     import setDocument from '../../controllers/setDocument'
-    import { doc, getDoc, serverTimestamp } from 'firebase/firestore'
+    import { serverTimestamp } from 'firebase/firestore'
     import { useRoute, useRouter } from 'vue-router'
     import { db, auth } from '../../firebase/config'
     import { onMounted } from '@vue/runtime-core'
@@ -851,16 +852,119 @@
             const route = useRoute()
             const router = useRouter()
             enqueteur.value = auth.currentUser.displayName
-            const f = onMounted( async () =>{
+
+            onMounted( async () =>{
                 console.log(" onMounted ", route.params.docId)
                 if(route.params.docId){
+                    const { document, getError, load } = getDocument()
 
-                    const docRef = doc( db, 'approvisionnements', route.params.docId)
-                    const res =   await getDoc(docRef)
-                    if(res.data()) {
-                        console.log(" approvisionnement res :", res.id)
-                        id.value = res.id
+                    await load("approvisionnements", route.params.docId)
+                    if( getError.value ) {error.value = "Enregistrement non trouvé ! "}
+                    // error.value = getError.value
+                    if(document.value) {
+                        console.log(" approvisionnement res :", document.value.id)
                         // Charger les données
+                        id.value = document.value.id
+                        enqueteur.value = document.value.enqueteur
+                        statutFonctionnement.value = document.value.statutFonctionnement
+                        raisonResiliation.value = document.value.raisonResiliation
+                        volumeMai2021.value = document.value.volumeMai2021
+                        jourFactureMai2021.value = document.value.jourFactureMai2021
+                        montantMai2021.value = document.value.montantMai2021
+                        impayeMai2021.value = document.value.impayeMai2021
+                        volumeJuin2021.value = document.value.volumeJuin2021
+                        jourFactureJuin2021.value = document.value.jourFactureJuin2021
+                        montantJuin2021.value = document.value.montantJuin2021
+                        impayeJuin2021.value = document.value.impayeJuin2021
+                        volumeJuillet2021.value = document.value.volumeJuillet2021
+                        jourFactureJuillet2021.value = document.value.jourFactureJuillet2021
+                        montantJuillet2021.value = document.value.montantJuillet2021
+                        impayeJuillet2021.value = document.value.impayeJuillet2021
+                        volumeAout2021.value = document.value.volumeAout2021
+                        jourFactureAout2021.value = document.value.jourFactureAout2021
+                        montantAout2021.value = document.value.montantAout2021
+                        impayeAout2021.value = document.value.impayeAout2021
+                        nbForage.value = document.value.nbForage
+                        compteurForage.value = document.value.compteurForage
+                        nbPuit.value = document.value.nbPuit
+                        compteurPuit.value = document.value.compteurPuit
+                        nbAutres.value = document.value.nbAutres
+                        compteurAutres.value = document.value.compteurAutres
+                        usages.value = document.value.usages
+                        sourcePrincipales.value = document.value.sourcePrincipales
+                        qualiteEau.value = document.value.qualiteEau
+                        volumeConsommes.value = document.value.volumeConsommes
+                        besoins.value = document.value.besoins
+                        qualiteApprovisionnement.value = document.value.qualiteApprovisionnement
+                        Nbabonnements.value = document.value.Nbabonnements
+                        regroupements.value = document.value.regroupements
+                        diametres.value = document.value.diametres
+                        compteurs.value = document.value.compteurs
+                        consommationMaximums.value = document.value.consommationMaximums
+                        periodes.value = document.value.periodes
+                        frequenceNbJourSaisonSeche.value = document.value.frequenceNbJourSaisonSeche
+                        frequenceNbJourSaisonPluvieuse.value = document.value.frequenceNbJourSaisonPluvieuse
+                        frequenceNbSemaineSaisonSeche.value = document.value.frequenceNbSemaineSaisonSeche
+                        frequenceNbSemaineSaisonPluvieuse.value = document.value.frequenceNbSemaineSaisonPluvieuse
+                        dureeSaisonSeche.value = document.value.dureeSaisonSeche
+                        dureeSaisonPluvieuse.value = document.value.dureeSaisonPluvieuse
+                        pressionFaibleSaisonSeche.value = document.value.pressionFaibleSaisonSeche
+                        pressionFaibleSaisonPluvieuse.value = document.value.pressionFaibleSaisonPluvieuse
+                        pressionMoyenneSaisonSeche.value = document.value.pressionMoyenneSaisonSeche
+                        pressionMoyenneSaisonPluvieuse.value = document.value.pressionMoyenneSaisonPluvieuse
+                        pressionEleveSaisonSeche.value = document.value.pressionEleveSaisonSeche
+                        pressionEleveSaisonPluvieuse.value = document.value.pressionEleveSaisonPluvieuse
+                        branchementActivite.value = document.value.branchementActivite
+                        branchementService.value = document.value.branchementService
+                        branchementFacture.value = document.value.branchementFacture
+                        resiliation.value = document.value.resiliation
+                        resiliationPeriode.value = document.value.resiliationPeriode
+                        resiliationRaison.value = document.value.resiliationRaison
+                        modaliteFacturation.value = document.value.modaliteFacturation
+                        paiement.value = document.value.paiement
+                        problemeFacturation.value = document.value.problemeFacturation
+                        raisonProblemeFacturation.value = document.value.raisonProblemeFacturation
+                        problemePaiement.value = document.value.problemePaiement
+                        raisonProblemePaiement.value = document.value.raisonProblemePaiement
+                        existancePompe.value = document.value.existancePompe
+                        consommationEnergie.value = document.value.consommationEnergie
+                        coutMensuel.value = document.value.coutMensuel
+                        existanceTraitement.value = document.value.existanceTraitement
+                        usageTraitement.value = document.value.usageTraitement
+                        existanceCiterne.value = document.value.existanceCiterne
+                        capaciteStockage.value = document.value.capaciteStockage
+                        profondeurForage.value = document.value.profondeurForage
+                        coutForage.value = document.value.coutForage
+                        anneeConstruction.value = document.value.anneeConstruction
+                        raisonConstruction.value = document.value.raisonConstruction
+                        existancePompeForage.value = document.value.existancePompeForage
+                        capacitePompeForage.value = document.value.capacitePompeForage
+                        existanceCompteurPompeForage.value = document.value.existanceCompteurPompeForage
+                        volumeForages.value = document.value.volumeForages
+                        nbJourForages.value = document.value.nbJourForages
+                        existanceCiterneForage.value = document.value.existanceCiterneForage
+                        capaciteStockageCiterneForage.value = document.value.capaciteStockageCiterneForage
+                        coutStockageCiterneForage.value = document.value.coutStockageCiterneForage
+                        coutMensuelForage.value = document.value.coutMensuelForage
+                        fonctionnementForage.value = document.value.fonctionnementForage
+                        entretienForage.value = document.value.entretienForage
+                        amortissementForage.value = document.value.amortissementForage
+                        usageTraitementForage.value = document.value.usageTraitementForage
+                        existanceTraitementForage.value = document.value.existanceTraitementForage
+                        listeProbleFuite.value = document.value.listeProbleFuite
+                        problemeFuite.value = document.value.problemeFuite
+                        recyclageEauUsee.value = document.value.recyclageEauUsee
+                        finRecyclage.value = document.value.finRecyclage
+                        coutAdditionnel.value = document.value.coutAdditionnel
+                        surveillanceFonctionnement.value = document.value.surveillanceFonctionnement
+                        activiteEvacuations.value = document.value.activiteEvacuations
+                        egoutEvacuation.value = document.value.egoutEvacuation
+                        stationTraitementEvacuations.value = document.value.stationTraitementEvacuations
+                        reseauPluvialEvacuations.value = document.value.reseauPluvialEvacuations
+                        autreEvacuations.value = document.value.autreEvacuations
+                        traitementPrealable.value = document.value.traitementPrealable
+                        typeTraitementPrealable.value = document.value.typeTraitementPrealable
+                        autreTraitementPrealable.value = document.value.autreTraitementPrealable
 
                     }
 
@@ -874,12 +978,118 @@
                 if(id.value) {
                     //update
                     error.value = null
-                    let a = {
-                        id: id.value,
-
+                   let approvisionnement = {
+                       id: id.value,
+                        enqueteur : enqueteur.value,
+                        statutFonctionnement : statutFonctionnement.value,
+                        raisonResiliation : raisonResiliation.value,
+                        volumeMai2021 : volumeMai2021.value,
+                        jourFactureMai2021 : jourFactureMai2021.value,
+                        montantMai2021 : montantMai2021.value,
+                        impayeMai2021 : impayeMai2021.value,
+                        volumeJuin2021 : volumeJuin2021.value,
+                        jourFactureJuin2021 : jourFactureJuin2021.value,
+                        montantJuin2021 : montantJuin2021.value,
+                        impayeJuin2021 : impayeJuin2021.value,
+                        volumeJuillet2021 : volumeJuillet2021.value,
+                        jourFactureJuillet2021 : jourFactureJuillet2021.value,
+                        montantJuillet2021 : montantJuillet2021.value,
+                        impayeJuillet2021 : impayeJuillet2021.value,
+                        volumeAout2021 : volumeAout2021.value,
+                        jourFactureAout2021 : jourFactureAout2021.value,
+                        montantAout2021 : montantAout2021.value,
+                        impayeAout2021 : impayeAout2021.value,
+                        nbForage: nbForage.value,
+                        compteurForage: compteurForage.value,
+                        nbPuit: nbPuit.value,
+                        compteurPuit: compteurPuit.value,
+                        nbAutres: nbAutres.value,
+                        compteurAutres: compteurAutres.value,
+                        usages : usages.value,
+                        sourcePrincipales : sourcePrincipales.value,
+                        qualiteEau : qualiteEau.value,
+                        volumeConsommes : volumeConsommes.value,
+                        besoins : besoins.value,
+                        qualiteApprovisionnement : qualiteApprovisionnement.value,
+                        Nbabonnements : Nbabonnements.value,
+                        regroupements : regroupements.value,
+                        diametres : diametres.value,
+                        compteurs : compteurs.value,
+                        consommationMaximums : consommationMaximums.value,
+                        periodes : periodes.value,
+                        frequenceNbJourSaisonSeche : frequenceNbJourSaisonSeche.value,
+                        frequenceNbJourSaisonPluvieuse : frequenceNbJourSaisonPluvieuse.value,
+                        frequenceNbSemaineSaisonSeche : frequenceNbSemaineSaisonSeche.value,
+                        frequenceNbSemaineSaisonPluvieuse : frequenceNbSemaineSaisonPluvieuse.value,
+                        dureeSaisonSeche : dureeSaisonSeche.value,
+                        dureeSaisonPluvieuse : dureeSaisonPluvieuse.value,
+                        pressionFaibleSaisonSeche : pressionFaibleSaisonSeche.value,
+                        pressionFaibleSaisonPluvieuse : pressionFaibleSaisonPluvieuse.value,
+                        pressionMoyenneSaisonSeche : pressionMoyenneSaisonSeche.value,
+                        pressionMoyenneSaisonPluvieuse : pressionMoyenneSaisonPluvieuse.value,
+                        pressionEleveSaisonSeche : pressionEleveSaisonSeche.value,
+                        pressionEleveSaisonPluvieuse : pressionEleveSaisonPluvieuse.value,
+                        branchementActivite : branchementActivite.value,
+                        branchementService : branchementService.value,
+                        branchementFacture : branchementFacture.value,
+                        resiliation : resiliation.value,
+                        resiliationPeriode : resiliationPeriode.value,
+                        resiliationRaison : resiliationRaison.value,
+                        modaliteFacturation : modaliteFacturation.value,
+                        paiement : paiement.value,
+                        problemeFacturation : problemeFacturation.value,
+                        raisonProblemeFacturation : raisonProblemeFacturation.value,
+                        problemePaiement : problemePaiement.value,
+                        raisonProblemePaiement : raisonProblemePaiement.value,
+                        existancePompe : existancePompe.value,
+                        consommationEnergie : consommationEnergie.value,
+                        coutMensuel : coutMensuel.value,
+                        existanceTraitement : existanceTraitement.value,
+                        usageTraitement : usageTraitement.value,
+                        existanceCiterne : existanceCiterne.value,
+                        capaciteStockage : capaciteStockage.value,
+                        profondeurForage : profondeurForage.value,
+                        coutForage : coutForage.value,
+                        anneeConstruction : anneeConstruction.value,
+                        raisonConstruction : raisonConstruction.value,
+                        existancePompeForage : existancePompeForage.value,
+                        capacitePompeForage : capacitePompeForage.value,
+                        existanceCompteurPompeForage : existanceCompteurPompeForage.value,
+                        volumeForages : volumeForages.value,
+                        nbJourForages : nbJourForages.value,
+                        existanceCiterneForage : existanceCiterneForage.value,
+                        capaciteStockageCiterneForage : capaciteStockageCiterneForage.value,
+                        coutStockageCiterneForage : coutStockageCiterneForage.value,
+                        coutMensuelForage : coutMensuelForage.value,
+                        fonctionnementForage : fonctionnementForage.value,
+                        entretienForage : entretienForage.value,
+                        amortissementForage : amortissementForage.value,
+                        usageTraitementForage : usageTraitementForage.value,
+                        existanceTraitementForage : existanceTraitementForage.value,
+                        listeProbleFuite : listeProbleFuite.value,
+                        problemeFuite : problemeFuite.value,
+                        recyclageEauUsee : recyclageEauUsee.value,
+                        finRecyclage : finRecyclage.value,
+                        coutAdditionnel : coutAdditionnel.value,
+                        surveillanceFonctionnement : surveillanceFonctionnement.value,
+                        activiteEvacuations : activiteEvacuations.value,
+                        egoutEvacuation : egoutEvacuation.value,
+                        stationTraitementEvacuations : stationTraitementEvacuations.value,
+                        reseauPluvialEvacuations : reseauPluvialEvacuations.value,
+                        autreEvacuations : autreEvacuations.value,
+                        traitementPrealable : traitementPrealable.value,
+                        typeTraitementPrealable : typeTraitementPrealable.value,
+                        autreTraitementPrealable : autreTraitementPrealable.value,
+                        //createdAt: serverTimestamp()
                     }
-                    update("approvisionnements", a)
+                    //Add approvisionnements
+                   await update("approvisionnements", approvisionnement, route.params.docId)
                     error.value = updateError.value
+                    console.log("appro data : ", approvisionnement)
+                    if(!error.value){
+                        router.push( { name: 'EnqueteList', params: { token: auth.currentUser.accessToken }})
+                    }
+
                 } else {
                     //Create
                     error.value = null
