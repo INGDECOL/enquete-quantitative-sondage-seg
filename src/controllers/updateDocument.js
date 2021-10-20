@@ -8,7 +8,7 @@ import { collection, addDoc, updateDoc, deleteDoc, doc, serverTimestamp } from "
     //const router = useRouter()
 
     const update = async (collectionName, document, id) =>{
-        console.log("In updateDocument : ", collectionName, document)
+        // console.log("In updateDocument : ", collectionName, document)
         try {
             const docRef = doc( db, collectionName, id)
             const res = await updateDoc(docRef, document)
