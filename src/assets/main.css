@@ -61,6 +61,10 @@ header {
     max-width: 1200px;
     margin: 0 auto;
     padding: 10px;
+
+  }
+  header.header {
+    background-color: #ccd0d3;
   }
   header.header h1 {
     color: #6e6c6c;
@@ -68,7 +72,6 @@ header {
     font-family: 'Tangerine', serif;
     /* font-size: 48px; */
     text-shadow: 2px 2px 2px rgb(37, 36, 36);
-
   }
 header a {
     margin-left: 20px;
@@ -215,6 +218,12 @@ nav span {
     .material-icons:hover {
         color: #777;
     }
+    span.disabled {
+      opacity: 0.5;
+      color: var(--primary);
+      background: var(--secondary);
+      cursor: not-allowed;
+    }
     .material-icons.strash:hover {
         color: #ec8a8a;
     }
@@ -238,6 +247,34 @@ nav span {
 .enquete a.router-link-active {
       font-weight: bold;
       color: #444;
+    }
+
+ .spin{
+        display: block;
+        width: 45px;
+        height: 45px;
+        margin: 45px auto;
+        border: 3px solid transparent;
+        border-radius: 50%;
+        border-top-color: #ff8000;
+        animation: spin 1s ease infinite;
+    }
+    @keyframes spin {
+        to {
+            transform: rotateZ(360deg);
+        }
+        0%{
+            border-top-color: #ff8000;
+        }
+        50%{
+            border-top-color: #ffee00;
+        }
+        80%{
+            border-top-color: #00ffbf;
+        }
+        100%{
+            border-top-color: #0084ff;
+        }
     }
 
 /* error text */

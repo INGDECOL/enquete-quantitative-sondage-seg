@@ -225,7 +225,6 @@
             const perspectiveMoyenTerme = ref('')
             const raisonsStructurelle = ref('')
 
-
             const route = useRoute()
             const router = useRouter()
             enqueteur.value = auth.currentUser.displayName
@@ -237,7 +236,7 @@
                         await load("entreprises", route.params.id)
                         error.value = getError.value
                         if( document.value ) {
-                            //console.log("Document retrieved : ", document.value)
+                            console.log("Document retrieved : ", document.value)
                             id.value = document.value.id
                             enqueteurId.value = document.value.enqueteurId
                             zoneEnquete.value = document.value.zoneEnquete
@@ -252,7 +251,7 @@
                             createdAt.value = document.value.createdAt
 
                         }
-
+                        //console.log("enqueteurId : ", enqueteurId.value)
                         await load( "secteurActivites", route.params.id)
                         error.value = getError.value
                         if ( document.value ) {
@@ -281,7 +280,6 @@
                 //update
                 console.log("Updating entreprise .........")
                 let entreprise = {
-                    id: id.value,
                     enqueteurId: auth.currentUser.email,
                     zoneEnquete: zoneEnquete.value,
                     nomEtreprise: nomEtreprise.value,
@@ -298,7 +296,6 @@
                 error.value = updateError.value
 
                  const  secteurActivite = {
-                    id: id.value,
                     secteurSecondaire: secteurSecondaire.value,
                     secteurPrincipal: secteurPrincipal.value,
                     serviceFournis: serviceFournis.value,

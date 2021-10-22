@@ -10,14 +10,15 @@ import {  getDocs, collection, query, orderBy, onSnapshot } from 'firebase/fires
             const q = query( docRef, orderBy("createdAt", "desc"))
             const res = onSnapshot(q, ( snap ) =>{
                 documents.value = snap.docs.map(doc =>{
+                    //console.log("Data : ", doc.data())
                     return {...doc.data(), id : doc.id}
                 })
             })
-            console.log("Form :", documents.value)
         }catch (err) {
             getError.value = err.message
             console.log(err);
         }
+            // console.log("Form :", documents.value)
 }
 const getDocuments = () =>{
     return {documents, getError, load}

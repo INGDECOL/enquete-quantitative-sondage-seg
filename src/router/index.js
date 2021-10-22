@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Create from '../views/enquetes/CreateEnquete.vue'
 import Approvisionnement from '../views/enquetes/CreateApprovisionnement.vue'
+import CoutApprovisionnement from '../views/enquetes/CreateCoutApprovisionnement.vue'
 import SignIn from '../views/SignIn.vue'
 import SignUp from '../views/admin/Signup.vue'
 import Dashboard from '../views/admin/Dashboard.vue'
@@ -37,7 +38,7 @@ const requireAuthAdmin = async ( to, from, next) =>{
         next()
       }
     }else {
-      next({ name: 'Home'})
+      next({ name: 'SignIn'})
     }
 
 }
@@ -62,9 +63,16 @@ const routes = [
 
   },
   {
-    path: '/enquetes/approvisionnement/:token/:docId/:id?',
+    path: '/enquetes/approvisionnement/:token/:docId?',
     name: 'Approvisionnement',
     component: Approvisionnement,
+    beforeEnter: requireAuth
+
+  },
+  {
+    path: '/enquetes/coutapprovisionnement/:token/:docId?',
+    name: 'CoutApprovisionnement',
+    component: CoutApprovisionnement,
     beforeEnter: requireAuth
 
   },

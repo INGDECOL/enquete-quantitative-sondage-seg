@@ -979,7 +979,6 @@
                     //update
                     error.value = null
                    let approvisionnement = {
-                       id: id.value,
                         enqueteur : enqueteur.value,
                         statutFonctionnement : statutFonctionnement.value,
                         raisonResiliation : raisonResiliation.value,
@@ -1087,7 +1086,7 @@
                     error.value = updateError.value
                     console.log("appro data : ", approvisionnement)
                     if(!error.value){
-                        router.push( { name: 'EnqueteList', params: { token: auth.currentUser.accessToken }})
+                        router.push( { name: 'CoutApprovisionnement', params: { token: auth.currentUser.accessToken, docId: route.params.docId  }})
                     }
 
                 } else {
@@ -1202,7 +1201,7 @@
                     error.value = setError.value
                     console.log("appro data : ", approvisionnement)
                     if(!error.value){
-                        router.push( { name: 'EnqueteList', params: { token: auth.currentUser.accessToken }})
+                        router.push( { name: 'CoutApprovisionnement', params: { token: auth.currentUser.accessToken, docId: route.params.docId }})
                     }
                 }
             }
