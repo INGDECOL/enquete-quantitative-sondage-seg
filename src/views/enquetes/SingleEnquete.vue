@@ -1,7 +1,7 @@
 <template>
     <div class="enquete" v-if="enquete">
         <div class="actions">
-            <h3 @click="showDetails = !showDetails">{{ enquete.nomEtreprise }}</h3>
+            <h3 @click="showDetails = !showDetails" >{{ enquete.nomEtreprise }}</h3>
             <div class="icons">
                 <router-link :to="{ name: 'Create', params: {token: token, id: enquete.id}}">
                     <span class="material-icons">description</span>
@@ -11,7 +11,7 @@
 
         </div>
         <div class="details" v-if="showDetails">
-            <h4>Zone de {{ enquete.zoneEnquete}}</h4>
+            <h4 >Zone de {{ enquete.zoneEnquete}}</h4>
             <h4>Contact : {{ enquete.contactEtreprise}} / SiteWeb :  {{ enquete.siteweb}} / Adresse mail :  {{ enquete.mail }} </h4>
             <h6><small>Date d'enquête : {{ enquete.dateEnquete}}</small></h6>
 

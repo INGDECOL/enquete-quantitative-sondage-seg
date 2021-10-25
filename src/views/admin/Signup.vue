@@ -1,4 +1,5 @@
 <template>
+    <navbar />
     <div>
       <form @submit.prevent="handleSubmit">
         <h2 style="text-align: center">Nouveau compte</h2>
@@ -24,10 +25,12 @@
 import { ref } from "vue";
 import useSignUp from "../../controllers/useSignUp"
 import { useRouter } from 'vue-router';
+import Navbar from '../../components/Navbar.vue';
 
 export default {
+  components: { Navbar },
   setup () {
-    const router = useRouter
+    const router = useRouter()
     const email = ref('')
     const password = ref('')
     const displayName = ref('')

@@ -1,4 +1,5 @@
 <template>
+    <navbar />
     <div class="create">
         <form  class="enquete" @submit.prevent="handleSubmit">
             <div class="error" v-if="error">{{ error}}</div>
@@ -61,7 +62,10 @@
     import { useRoute, useRouter } from 'vue-router'
     import { db, auth } from '../../firebase/config'
     import { onMounted } from '@vue/runtime-core'
+import Navbar from '../../components/Navbar.vue'
     export default {
+        components: { Navbar },
+
          props: ['token'],
          setup() {
             const id = ref(null)

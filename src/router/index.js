@@ -7,6 +7,7 @@ import SignIn from '../views/SignIn.vue'
 import SignUp from '../views/admin/Signup.vue'
 import Dashboard from '../views/admin/Dashboard.vue'
 import EnqueteList from '../views/enquetes/EnqueteList.vue'
+import Users from "../views/admin/views/AdminUserList.vue"
 import { db, auth } from "../firebase/config"
 import getUser from "../controllers/getUser"
 import { ref } from "vue";
@@ -55,6 +56,12 @@ const routes = [
     component: Dashboard,
     beforeEnter: requireAuthAdmin
   },
+      {
+        path: '/users',
+        name: 'user-list',
+        component: Users,
+        beforeEnter : requireAuthAdmin
+      },
   {
     path: '/enquetes/create/:token/:id?',
     name: 'Create',
@@ -91,7 +98,12 @@ const routes = [
     name: 'EnqueteList',
     component: EnqueteList,
     beforeEnter: requireAuth
-  }
+  },
+   {
+        path: '/card',
+        name: 'card',
+        component: () => import('@/views/Card.vue'),
+      },
 ]
 
 const router = createRouter({

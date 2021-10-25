@@ -1,0 +1,97 @@
+@tailwind base;
+
+@tailwind components;
+
+@font-face {
+    font-family: Tangerine;
+    src: url('../fonts/Tangerine-Bold.ttf');
+}
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply  my-0 mx-5 bg-gray-50 ;
+    }
+    .title {
+        @apply p-2.5 my-5 mx-auto text-4xl font-bold
+    }
+    label {
+        @apply inline-block mt-2.5 relative font-bold text-sm mb-1.5
+    }
+    p {
+        @apply my-4 mx-auto
+    }
+    header {
+        @apply flex justify-between items-center max-w-none my-0 mx-auto p-2.5
+    }
+    header.header {
+        @apply bg-gray-300
+    }
+    header.header h1 {
+        @apply text-gray-500 text-4xl  font-bold font-tangerine drop-shadow-1xl
+    }
+    header a {
+        @apply ml-5
+    }
+    header a.router-link-active {
+        @apply text-gray-700 font-bold
+    }
+    a {
+        @apply no-underline
+    }
+    form a {
+        @apply font-bold
+    }
+    button, .btn {
+        @apply bg-secondary rounded-xl border-0 py-2 px-3 font-bold cursor-pointer inline-block ml-0
+    }
+    .button {
+        @apply flex justify-end mt-4
+    }
+    button:hover, .btn:hover {
+        @apply bg-primary text-white
+    }
+    button:disabled {
+        @apply opacity-50 text-primary bg-secondary cursor-not-allowed
+    }
+    /* forms */
+    form {
+        @apply max-w-md m-auto p-7 rounded-lg drop-shadow-md border border-solid border-secondary bg-white
+    }
+    .enquete {
+        border-bottom : dashed;
+        border-left: solid #1f8a4f;
+        @apply my-5 mx-auto py-3 px-5 border-b bg-gray-100 rounded-lg drop-shadow-md border-l-4 max-w-6xl
+    }
+    form .entete, .presentation, .titre {
+        @apply border-2 border-solid border-slategray mt-1.5
+    }
+    .entete p, .soustitre p {
+        @apply text-center font-bold
+    }
+    .presentation p, .titre p, .soustitre p {
+        @apply text-left ml-2 font-bold
+    }
+    .titre p, .soustitre p {
+        @apply text-blue-500
+    }
+    .soustitre p {
+        @apply underline
+    }
+    .entreprise {
+        @apply flex justify-between items-center my-0.5 mx-auto p-2 gap-3
+    }
+    input, textarea, select {
+        @apply border-0 bottom-px border-solid border-secondary p-2 block w-full box-border my-0 mx-2
+    }
+    textarea {
+        @apply h-40
+    }
+    nav span {
+        @apply font-bold cursor-pointer ml-2.5
+    }
+    .enquete h3 {
+        @apply inline-block relative text-2xl
+    }
+
+}

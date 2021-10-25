@@ -1,4 +1,5 @@
 <template>
+<navbar />
 <header>
   <h1>Liste des enquetes</h1>
   <button @click="newEnquete">Nouveau</button>
@@ -21,9 +22,10 @@ import SingleEnquete from './SingleEnquete.vue'
 import Spinner from '../../components/Spinner.vue'
 import getDocuments from '../../controllers/getDocuments'
 import { onMounted } from '@vue/runtime-core'
+import Navbar from '../../components/Navbar.vue'
 export default {
     //props: ['enquetes'],
-    components: { SingleEnquete, Spinner },
+    components: { SingleEnquete, Spinner, Navbar },
     setup () {
         const error = ref(null)
         const router = useRouter()

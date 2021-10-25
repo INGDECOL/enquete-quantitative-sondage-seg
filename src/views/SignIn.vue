@@ -1,4 +1,5 @@
 <template>
+<navbar />
 <div class="content">
   <form @submit.prevent="handleSubmit">
       <h2 style="text-align: center">Connectez vous</h2>
@@ -18,7 +19,9 @@ import { ref } from '@vue/reactivity';
 import useSignIn from "../controllers/useSignIn";
 import { useRouter } from 'vue-router'
 import getToken from "../controllers/getToken";
+import Navbar from '../components/Navbar.vue';
 export default {
+  components: { Navbar },
     setup() {
         const router = useRouter()
         const email = ref('')

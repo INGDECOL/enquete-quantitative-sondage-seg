@@ -1,4 +1,5 @@
 <template>
+<Navbar />
   <div class="home">
     <div class="title">
       HOME PAGE
@@ -14,11 +15,12 @@
 
 <script>
 // @ is an alias to /src
+import Navbar from '../components/Navbar.vue'
 
 export default {
   name: 'Home',
   components: {
-
+    Navbar
   }
 }
 </script>
