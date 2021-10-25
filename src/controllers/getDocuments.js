@@ -6,6 +6,9 @@ import {  getDocs, collection, query, orderBy, onSnapshot } from 'firebase/fires
     const getError = ref(null)
     const load = async (collectionName) =>{
         try {
+            await new Promise(resolve => {
+                setTimeout(resolve, 3000);
+            })
             const docRef =  collection(db, collectionName) // docs to fetch in firebase
             const q = query( docRef, orderBy("createdAt", "desc"))
             const res = onSnapshot(q, ( snap ) =>{

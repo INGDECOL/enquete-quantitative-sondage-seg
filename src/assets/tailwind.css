@@ -22,13 +22,13 @@
         @apply my-4 mx-auto
     }
     header {
-        @apply flex justify-between items-center max-w-none my-0 mx-auto p-2.5
+        @apply flex justify-between items-center max-w-none my-0 mx-auto p-2.5 font-bold
     }
     header.header {
-        @apply bg-gray-300
+        @apply bg-gray-300 font-bold
     }
     header.header h1 {
-        @apply text-gray-500 text-4xl  font-bold font-tangerine drop-shadow-1xl
+        @apply text-gray-600 text-4xl  font-bold font-tangerine drop-shadow-1xl
     }
     header a {
         @apply ml-5
@@ -38,6 +38,9 @@
     }
     a {
         @apply no-underline
+    }
+    p {
+        @apply my-4 mx-auto
     }
     form a {
         @apply font-bold
@@ -91,7 +94,31 @@
         @apply font-bold cursor-pointer ml-2.5
     }
     .enquete h3 {
-        @apply inline-block relative text-2xl
+        @apply inline-block relative text-2xl mb-2.5 cursor-pointer font-bold
     }
+    .actions {
+        @apply flex items-center justify-between
+    }
+     .material-icons {
+         @apply ml-2.5 cursor-pointer text-xl text-gray-400 hover:text-gray-500
+     }
+     span.disabled {
+         @apply opacity-30 text-primary bg-secondary cursor-not-allowed
+     }
+      .material-icons.strash {
+          @apply hover:text-red-500
+      }
+      .enquete a {
+          @apply text-red-200 no-underline ml-5
+      }
+      .enquete a.router-link-active {
+          @apply font-bold text-gray-700
+      }
+      .spin {
+          @apply block w-11 h-11 my-11 mx-auto border-4 border-solid border-transparent rounded-3xl
+      }
+      .error {
+          @apply text-warning text-sm text-center my-4 mx-0
+      }
 
 }
